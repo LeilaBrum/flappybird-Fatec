@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class SpawnObjects : MonoBehaviour
 {
-    public float maxTime;
-    public GameObject prefab;
-
-    public float maxHeight;
-    public float minHeight;
+    public float maxTime = 1f;
+    public GameObject[] prefabs;
+    public float maxHeight = 5f;
+    public float minHeight = -5f;
 
     private float timer;
 
@@ -17,7 +16,8 @@ public class SpawnObjects : MonoBehaviour
 
     private void Update()
     {
-        if (timer > maxTime) {
+        if (timer > maxTime)
+        {
             InstantiateObject();
             timer = 0;
         }
@@ -27,9 +27,10 @@ public class SpawnObjects : MonoBehaviour
 
     private void InstantiateObject()
     {
-        var instance = Instantiate(prefab);
+        GameObject prefabToSpawn = prefabs[Random.Range(0, prefabs.Length)];
+        var instance = Instantiate(prefabToSpawn);
         var y = Random.Range(minHeight, maxHeight);
-        instance.transform.position = transform.position + new Vector3(0, y);
+        instance.transform.position = transform.position + new Vector3(0, y, 0);
 
         Destroy(instance, 20f);
     }
